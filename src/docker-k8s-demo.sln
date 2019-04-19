@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EggPlantApi", "EggPlant\EggPlantApi.csproj", "{A8DB0861-CAF0-49A0-8B20-8E7CE576F0A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EggPlantApi", "EggPlantApi\EggPlantApi.csproj", "{A8DB0861-CAF0-49A0-8B20-8E7CE576F0A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentStoreClient", "DocumentStoreClient\DocumentStoreClient.csproj", "{DBB2FD87-BB06-430E-8738-63856E14312A}"
 EndProject

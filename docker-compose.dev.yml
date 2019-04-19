@@ -1,0 +1,9 @@
+version: '3.4'
+
+services: 
+  ravendb:
+    environment:
+      - RAVEN_ARGS='--Setup.Mode=None'
+      - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
+    ports:
+      - "8000:8080"

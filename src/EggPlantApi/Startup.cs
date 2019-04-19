@@ -20,12 +20,12 @@ namespace EggPlantApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton(Configuration);
             services.Configure<RavenSettings>(options =>
             {
                 options.Url = new [] {Configuration["EggPlantApiDBUrl"]};
                 options.DefaultDatabase = Configuration["EggPlantApiDB"];
             });
-            services.AddSingleton(Configuration);
             services.AddSingleton<DocumentStoreHolder>();
         }
 
