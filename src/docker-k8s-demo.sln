@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EggPlantApi", "EggPlantApi\EggPlantApi.csproj", "{A8DB0861-CAF0-49A0-8B20-8E7CE576F0A0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-compose", "{4DA5C320-866D-403B-BE32-6EA7688D0F4D}"
+	ProjectSection(SolutionItems) = preProject
+		..\docker-compose.dev.yml = ..\docker-compose.dev.yml
+		..\docker-compose.yml = ..\docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
