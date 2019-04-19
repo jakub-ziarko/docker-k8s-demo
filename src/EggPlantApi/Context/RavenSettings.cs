@@ -1,4 +1,4 @@
-﻿namespace DocumentStoreClient
+﻿namespace EggPlantApi.Context
 {
     public class RavenSettings
     {

@@ -14,20 +14,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB" Version="2.3.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-  </ItemGroup>
+    <PackageReference Include="RavenDB.Client" Version="4.1.5" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\DocumentStoreClient\DocumentStoreClient.csproj" />
   </ItemGroup>
 
 

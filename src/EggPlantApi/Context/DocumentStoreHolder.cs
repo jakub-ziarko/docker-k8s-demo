@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
 
-namespace DocumentStoreClient
+namespace EggPlantApi.Context
 {
     public class DocumentStoreHolder
     {

@@ -5,11 +5,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["EggPlant/EggPlantApi.csproj", "EggPlant/"]
-COPY ["DocumentStoreClient/DocumentStoreClient.csproj", "DocumentStoreClient/"]
-RUN dotnet restore "EggPlant/EggPlantApi.csproj"
+COPY "EggPlantApi.csproj" .
+RUN dotnet restore "EggPlantApi.csproj"
 COPY . .
-WORKDIR "/src/EggPlant"
 RUN dotnet build "EggPlantApi.csproj" -c Release -o /app
 
 FROM build AS publish
