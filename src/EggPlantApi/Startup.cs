@@ -35,6 +35,8 @@ namespace EggPlantApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                var documentStore = app.ApplicationServices.GetService<DocumentStoreHolder>();
+                documentStore.EnsureDatabaseExists();
             }
             else
             {

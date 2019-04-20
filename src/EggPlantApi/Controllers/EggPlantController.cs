@@ -23,7 +23,7 @@ namespace EggPlantApi.Controllers
         {
             return Ok(new Egg
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Name = "EggBlack",
                 Height = 2,
                 Radius = 2,
@@ -40,7 +40,13 @@ namespace EggPlantApi.Controllers
                 {
                     foreach (var egg in eggs)
                     {
-                        bulkInsert.Store(egg.FillGuid());
+                        bulkInsert.Store(new Egg
+                        {
+                            Height = egg.Height,
+                            Width = egg.Width,
+                            Name = egg.Name,
+                            Radius = egg.Radius
+                        });
                     }
                 }
             }
