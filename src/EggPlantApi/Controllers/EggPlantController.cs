@@ -43,16 +43,8 @@ namespace EggPlantApi.Controllers
                 {
                     foreach (var egg in eggs)
                     {
-                        var insert = new Egg
-                        {
-                            Height = egg.Height,
-                            Width = egg.Width,
-                            Name = egg.Name,
-                            Radius = egg.Radius
-                        };
-
-                        _logger.LogDebug($"Inserting: {insert.Name} : {insert.Id}");
-                        bulkInsert.Store(insert);
+                        _logger.LogInformation($"Inserting: {egg.Name} : {egg.Id}");
+                        bulkInsert.Store(egg);
                     }
                 }
             }
