@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EggPlantApi.Context;
 using EggPlantApi.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Raven.Client.Documents.BulkInsert;
 
 namespace EggPlantApi.Controllers
@@ -11,10 +12,12 @@ namespace EggPlantApi.Controllers
     [ApiController]
     public class EggPlantController : ControllerBase
     {
+        private readonly ILogger<EggPlantController> _logger;
         private readonly DocumentStoreHolder _documentStoreHolder;
 
-        public EggPlantController(DocumentStoreHolder documentStoreHolder)
+        public EggPlantController(ILogger<EggPlantController> logger, DocumentStoreHolder documentStoreHolder)
         {
+            _logger = logger;
             _documentStoreHolder = documentStoreHolder;
         }
 
@@ -40,20 +43,15 @@ namespace EggPlantApi.Controllers
                 {
                     foreach (var egg in eggs)
                     {
-                        bulkInsert.Store(new Egg
-                        {
-                            Height = egg.Height,
-                            Width = egg.Width,
-                            Name = egg.Name,
-                            Radius = egg.Radius
-                        });
+                        _logger.LogInformation($"Creating Egg: {egg.Name} : {egg.Id}");
+                        bulkInsert.Store(egg);
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e.Message, e);
+                return StatusCode(500);
             }
 
             return Created($"{Request.Path}/egg", eggs);
