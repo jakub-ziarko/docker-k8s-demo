@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Operations;
@@ -11,10 +12,12 @@ namespace EggPlantApi.Context
 {
     public class DocumentStoreHolder
     {
+        private readonly ILogger<DocumentStoreHolder> _logger;
         public IDocumentStore Store { get; }
 
-        public DocumentStoreHolder(IOptions<RavenSettings> ravenSettings)
+        public DocumentStoreHolder(ILogger<DocumentStoreHolder> logger, IOptions<RavenSettings> ravenSettings)
         {
+            _logger = logger;
             var settings = ravenSettings.Value;
 
             Store = new DocumentStore
@@ -46,9 +49,13 @@ namespace EggPlantApi.Context
                 }
                 catch (ConcurrencyException)
                 {
-                    // The database was already created before calling CreateDatabaseOperation
+                    _logger.LogError("The database was already created before calling CreateDatabaseOperation");
                 }
 
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, e);
             }
         }
     }
