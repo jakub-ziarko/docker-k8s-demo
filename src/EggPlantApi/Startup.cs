@@ -13,6 +13,7 @@ using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
+using Sparrow.Json;
 using static System.String;
 
 namespace EggPlantApi
@@ -57,6 +58,7 @@ namespace EggPlantApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCorrelationId();
+            services.AddSerilogCorrelationId();
             services.AddSingleton(Configuration);
             services.Configure<RavenSettings>(options =>
             {
@@ -75,6 +77,7 @@ namespace EggPlantApi
                 UseGuidForCorrelationId = true,
                 UpdateTraceIdentifier = false
             });
+            app.UseSerilogCorrelationId();
 
             if (env.IsDevelopment())
             {
@@ -95,6 +98,11 @@ namespace EggPlantApi
         }
     }
 
+    public class SerilogCorrelationIdOptions
+    {
+        public string Header { get; set; }
+    }
+
     public static class CorrelationIdLoggerConfigurationExtensions
     {
         public static LoggerConfiguration WithCorrelationId(
@@ -110,7 +118,58 @@ namespace EggPlantApi
     {
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            propertyFactory.CreateProperty("CorrelationId", "asdadadasdafjasfljashfasljhfsa");
+            propertyFactory.CreateProperty("CorrelationId", string.Empty);
+        }
+    }
+
+    public static class SerilogCorrelationIdExtension
+    {
+        public static IServiceCollection AddSerilogCorrelationId(this IServiceCollection services)
+        {
+            services.AddScoped<SerilogCorrelationId>();
+            return services;
+        }
+    }
+
+    public class SerilogCorrelationId
+    {
+        private string _correlationId;
+
+        public string CorrelationId
+        {
+            get => _correlationId;
+
+            set
+            {
+                if (!IsNullOrEmpty(_correlationId))
+                    _correlationId = value;
+            }
+        }
+    }
+
+    public static class SerilogCorrelationIdConfigureExtension
+    {
+        public static IApplicationBuilder UseSerilogCorrelationId(this IApplicationBuilder app, SerilogCorrelationIdOptions options = null)
+        {
+            app.Use(async (context, next) =>
+            {
+                if (options == null)
+                    options = new SerilogCorrelationIdOptions {Header = "X-Correlation-ID"};
+
+                if (IsNullOrEmpty(options.Header))
+                    throw new ArgumentNullException($"Header not set within the {nameof(options)}");
+
+                var correlationId = app.ApplicationServices.GetService<SerilogCorrelationId>();
+                correlationId.CorrelationId = context.Request.Headers[options.Header];
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"CORRELATION_ID = {context.Request.Headers[options.Header]}");
+                Console.ForegroundColor = ConsoleColor.White;
+                // Do work that doesn't write to the Response.
+                await next.Invoke();
+                // Do logging or other work that doesn't write to the Response.
+            });
+
+            return app;
         }
     }
 }
