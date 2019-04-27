@@ -2,16 +2,12 @@
 using CorrelationId;
 using EggPlantApi.Context;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Configuration;
-using Serilog.Core;
-using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
 using static System.String;
 
@@ -46,11 +42,10 @@ namespace EggPlantApi
             {
                 Log.Logger = new LoggerConfiguration()
                     .Enrich.FromLogContext()
-                    .Enrich.WithCorrelationId()
                     .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUri))
                     {
                         AutoRegisterTemplate = true,
-                        
+
                     })
                     .CreateLogger();
             }
@@ -60,7 +55,7 @@ namespace EggPlantApi
             services.AddSingleton(Configuration);
             services.Configure<RavenSettings>(options =>
             {
-                options.Url = new [] {Configuration["EggPlantApiDBUrl"]};
+                options.Url = new[] {Configuration["EggPlantApiDBUrl"]};
                 options.DefaultDatabase = Configuration["EggPlantApiDB"];
             });
             services.AddSingleton<DocumentStoreHolder>();
@@ -92,25 +87,6 @@ namespace EggPlantApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
-    }
-
-    public static class CorrelationIdLoggerConfigurationExtensions
-    {
-        public static LoggerConfiguration WithCorrelationId(
-            this LoggerEnrichmentConfiguration loggerEnrichmentConfiguration)
-        {
-            if (loggerEnrichmentConfiguration == null) throw new ArgumentNullException(nameof(loggerEnrichmentConfiguration));
-            return loggerEnrichmentConfiguration.With<CorrelationIdEnricher>();
-        }
-
-    }
-
-    public class CorrelationIdEnricher : ILogEventEnricher
-    {
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-        {
-            propertyFactory.CreateProperty("CorrelationId", "asdadadasdafjasfljashfasljhfsa");
         }
     }
 }
