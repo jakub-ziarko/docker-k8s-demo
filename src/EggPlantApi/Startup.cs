@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
+using Sparrow.Json;
 using static System.String;
 
 namespace EggPlantApi
@@ -52,6 +53,7 @@ namespace EggPlantApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCorrelationId();
+            services.AddSerilogCorrelationId();
             services.AddSingleton(Configuration);
             services.Configure<RavenSettings>(options =>
             {
@@ -70,6 +72,7 @@ namespace EggPlantApi
                 UseGuidForCorrelationId = true,
                 UpdateTraceIdentifier = false
             });
+            app.UseSerilogCorrelationId();
 
             if (env.IsDevelopment())
             {
