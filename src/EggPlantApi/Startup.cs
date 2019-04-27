@@ -46,7 +46,6 @@ namespace EggPlantApi
             {
                 Log.Logger = new LoggerConfiguration()
                     .Enrich.FromLogContext()
-                    .Enrich.WithCorrelationId()
                     .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUri))
                     {
                         AutoRegisterTemplate = true,
@@ -92,25 +91,6 @@ namespace EggPlantApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
-        }
-    }
-
-    public static class CorrelationIdLoggerConfigurationExtensions
-    {
-        public static LoggerConfiguration WithCorrelationId(
-            this LoggerEnrichmentConfiguration loggerEnrichmentConfiguration)
-        {
-            if (loggerEnrichmentConfiguration == null) throw new ArgumentNullException(nameof(loggerEnrichmentConfiguration));
-            return loggerEnrichmentConfiguration.With<CorrelationIdEnricher>();
-        }
-
-    }
-
-    public class CorrelationIdEnricher : ILogEventEnricher
-    {
-        public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-        {
-            propertyFactory.CreateProperty("CorrelationId", "asdadadasdafjasfljashfasljhfsa");
         }
     }
 }
