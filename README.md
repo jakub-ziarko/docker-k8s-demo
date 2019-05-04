@@ -4,7 +4,7 @@
 `docker-compose -f "docker-compose.yml" -f "docker-compose.dev.yml" up`
 
 ### Build only one container
-`docker-compose build eggplant-api`
+`docker-compose build --no-cache eggplant-api`
 
 ## 2. Addresses
 * Elasticsearch: http://localhost:9200/
