@@ -6,6 +6,9 @@ services:
     build:
       context: src/EggPlantApi
       dockerfile: Dockerfile
+    depends_on:
+      - ravendb
+      - elasticsearch
 
   ravendb:
     image: ravendb/ravendb
