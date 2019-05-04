@@ -1,5 +1,4 @@
 ﻿using System;
-using CorrelationId;
 using EggPlantApi.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -44,14 +43,12 @@ namespace EggPlantApi
                     .Enrich.FromLogContext()
                     .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUri))
                     {
-                        AutoRegisterTemplate = true,
-
+                        AutoRegisterTemplate = true
                     })
                     .CreateLogger();
             }
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddCorrelationId();
             services.AddSingleton(Configuration);
             services.Configure<RavenSettings>(options =>
             {
@@ -64,13 +61,6 @@ namespace EggPlantApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseCorrelationId(new CorrelationIdOptions
-            {
-                Header = "X-Correlation-ID",
-                UseGuidForCorrelationId = true,
-                UpdateTraceIdentifier = false
-            });
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,7 +75,7 @@ namespace EggPlantApi
 
             loggerFactory.AddSerilog();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

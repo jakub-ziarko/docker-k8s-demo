@@ -1,17 +1,27 @@
 version: '3.4'
 
 services: 
-  ravendb:
+  eggplant-api:
     environment:
-      - RAVEN_Setup_Mode=None
-      - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
-      - RAVEN_License_Eula_Accepted=true
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - EggPlantApiDBUrl=http://localhost:8000
+      - EggPlantApiDB=EggPlant
+      - ElasticSearchUrl=http://localhost:9200
     ports:
-      - "8000:8080"
+     - "5000:80"
 
-  elasticsearch:
-    environment:
-      - discovery.type=single-node
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+#  ravendb:
+#    environment:
+#      - RAVEN_Setup_Mode=None
+#      - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'
+#      - RAVEN_License_Eula_Accepted=true
+#    ports:
+#      - "8000:8080"
+#
+#  elasticsearch:
+#    environment:
+#      - discovery.type=single-node
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"

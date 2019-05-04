@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Net.Http;
+using System.Net.Sockets;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Operations;
 using Raven.Client.Exceptions;
@@ -34,9 +38,23 @@ namespace EggPlantApi.Context
             if (string.IsNullOrWhiteSpace(database))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(database));
 
+            _logger.LogDebug("Trying to create DB if not present with retry policy");
+            var policy = Policy
+                .Handle<RavenException>()
+                .Or<HttpRequestException>()
+                .Or<SocketException>()
+                .WaitAndRetryForever(
+                    retryAttempt => TimeSpan.FromSeconds(2),
+                    (ex, retryAttempt, time) =>
+                    {
+                        _logger.LogWarning(ex.Message);
+                        _logger.LogWarning($"Trying to establish connection in {time}");
+                        _logger.LogWarning($"Attempt number {retryAttempt}");
+                    });
+
             try
-            {
-                Store.Maintenance.ForDatabase(database).Send(new GetStatisticsOperation());
+            { 
+                policy.Execute(() => { Store.Maintenance.ForDatabase(database).Send(new GetStatisticsOperation()); });
             }
             catch (DatabaseDoesNotExistException)
             {
@@ -45,7 +63,7 @@ namespace EggPlantApi.Context
 
                 try
                 {
-                    Store.Maintenance.Server.Send(new CreateDatabaseOperation(new DatabaseRecord(database)));
+                    policy.Execute(() => Store.Maintenance.Server.Send(new CreateDatabaseOperation(new DatabaseRecord(database))));
                 }
                 catch (ConcurrencyException)
                 {
@@ -55,6 +73,7 @@ namespace EggPlantApi.Context
             }
             catch (Exception e)
             {
+                _logger.LogDebug("LAST CATCH");
                 _logger.LogError(e.Message, e);
             }
         }
