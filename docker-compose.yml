@@ -7,22 +7,22 @@ services:
       context: src/EggPlantApi
       dockerfile: Dockerfile
 
-#  ravendb:
-#    image: ravendb/ravendb
-#
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
-#
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:7.0.0
-#    ports:
-#      - "5601:5601"
-#    depends_on:
-#      - elasticsearch
-#
-#  rabbit-mq-mgmt:
-#    image: "rabbitmq:3-management"
-#    ports:
-#      - "9080:15672"
-#    hostname: rabbit-mq
-#    container_name: rabbit-mq
+  ravendb:
+    image: ravendb/ravendb
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.0.0
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  rabbit-mq-mgmt:
+    image: "rabbitmq:3-management"
+    ports:
+      - "9080:15672"
+    hostname: rabbit-mq
+    container_name: rabbit-mq
