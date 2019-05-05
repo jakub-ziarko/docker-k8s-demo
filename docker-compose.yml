@@ -27,5 +27,6 @@ services:
     image: "rabbitmq:3-management"
     ports:
       - "9080:15672"
+      - "5672:5672"
     hostname: rabbit-mq
     container_name: rabbit-mq

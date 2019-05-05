@@ -15,6 +15,7 @@ namespace EggPlantApi.Domain.Entities
         {
             Id = Guid.NewGuid().ToString();
             Created = DateTime.Now;
+            Name = $"Egg - {Id.Substring(0, 8)}";
         }
     }
 }

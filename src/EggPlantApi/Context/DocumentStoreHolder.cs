@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
@@ -63,25 +62,6 @@ namespace EggPlantApi.Context
             catch (Exception e)
             {
                 _logger.LogError(e.Message, e);
-            }
-        }
-    }
-
-    public class Retry
-    {
-        public Action<string> Log { get; set; }
-
-        public void Execute(Action action)
-        {
-            try
-            {
-                action.Invoke();
-            }
-            catch (Exception e)
-            {
-                Log.Invoke(nameof(action));
-                Thread.Sleep(2000);
-                Execute(action);
             }
         }
     }

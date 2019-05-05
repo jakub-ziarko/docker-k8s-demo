@@ -1,5 +1,8 @@
 ﻿using System;
 using EggPlantApi.Context;
+using EggPlantApi.Domain.Events;
+using EggPlantApi.Domain.Services;
+using EggPlantApi.Integration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -59,6 +62,12 @@ namespace EggPlantApi
                 options.DefaultDatabase = Configuration["EggPlantApiDB"];
             });
             services.AddSingleton<DocumentStoreHolder>();
+
+            services.AddTransient<NewOrderCreatedIntegrationEvent>();
+            services.AddTransient<NewOrderCreatedIntegrationEventHandler>();
+            services.AddSingleton<IRabbitMqPersistentConnection, RabbitMqPersistentConnection>();
+            services.AddSingleton<IEventBus, EventBusRabbitMq>();
+            services.AddTransient<IEggService, EggService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +84,9 @@ namespace EggPlantApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<NewOrderCreatedIntegrationEvent, NewOrderCreatedIntegrationEventHandler>();
 
             loggerFactory.AddSerilog();
 

@@ -8,6 +8,11 @@ services:
       - EggPlantApiDBUrl=http://ravendb:8080
       - EggPlantApiDB=EggPlant
       - ElasticSearchUri=http://elasticsearch:9200
+      - EventBusUserName=guest
+      - EventBusPass=guest
+      - EventBusHostName=rabbit-mq
+      - EventBusVirtualHost=/
+      - EventBusPort=5672
     ports:
      - "5000:80"
 
