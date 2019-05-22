@@ -1,6 +1,6 @@
-﻿using EggPlantApi.Integration;
+﻿using EggOrdersApi.Integration;
 
-namespace EggPlantApi.Domain.Events
+namespace EggOrdersApi.Events
 {
     public class NewOrderCreatedIntegrationEvent : IntegrationEvent
     {

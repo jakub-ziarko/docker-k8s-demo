@@ -1,6 +1,15 @@
 version: '3.4'
 
 services: 
+  orders-api:
+    image: orders-api
+    build:
+      context: src/EggOrdersApi
+      dockerfile: Dockerfile
+    depends_on:
+      - ravendb
+      - elasticsearch
+
   eggplant-api:
     image: eggplant-api
     build:

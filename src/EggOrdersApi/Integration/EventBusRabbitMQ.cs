@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace EggPlantApi.Integration
+namespace EggOrdersApi.Integration
 {
     public class EventBusRabbitMq : IEventBus
     {
@@ -127,18 +126,11 @@ namespace EggPlantApi.Integration
             {
                 foreach (var handlerType in subscribedEvents.Handlers)
                 {
-                    try
-                    {
-                        var @event = _serviceProvider.GetRequiredService(subscribedEvents.EventType);
-                        var integrationEvent = JsonConvert.DeserializeObject(message, @event.GetType());
-                        var handler = _serviceProvider.GetRequiredService(handlerType);
-                        var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(subscribedEvents.EventType);
-                        await (Task)concreteType.GetMethod("Handle").Invoke(handler, new[] { integrationEvent });
-                    }
-                    catch (Exception e)
-                    {
-                        // to do log
-                    }
+                    var @event = _serviceProvider.GetRequiredService(subscribedEvents.EventType);
+                    var integrationEvent = JsonConvert.DeserializeObject(message, @event.GetType());
+                    var handler = _serviceProvider.GetRequiredService(handlerType);
+                    var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(subscribedEvents.EventType);
+                    await (Task)concreteType.GetMethod("Handle").Invoke(handler, new [] { integrationEvent });
                 }
             }
         }
