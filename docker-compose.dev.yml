@@ -1,6 +1,36 @@
 version: '3.4'
 
 services: 
+  orders-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - EggOrdersApiDBUrl=http://ravendb:8080
+      - EggOrdersApiDB=EggOrders
+      - ElasticSearchUri=http://elasticsearch:9200
+      - EventBusUserName=guest
+      - EventBusPass=guest
+      - EventBusHostName=rabbit-mq
+      - EventBusVirtualHost=/
+      - EventBusPort=5672
+    ports:
+      - "5010:80"
+
+  eggplant-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - EggPlantApiDBUrl=http://ravendb:8080
+      - EggPlantApiDB=EggPlant
+      - ElasticSearchUri=http://elasticsearch:9200
+      - EventBusUserName=guest
+      - EventBusPass=guest
+      - EventBusHostName=rabbit-mq
+      - EventBusVirtualHost=/
+      - EventBusPort=5672
+    ports:
+     - "5000:80"
+
   ravendb:
     environment:
       - RAVEN_Setup_Mode=None

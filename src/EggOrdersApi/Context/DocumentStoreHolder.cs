@@ -8,7 +8,7 @@ using Raven.Client.Exceptions.Database;
 using Raven.Client.ServerWide;
 using Raven.Client.ServerWide.Operations;
 
-namespace EggPlantApi.Context
+namespace EggOrdersApi.Context
 {
     public class DocumentStoreHolder
     {
@@ -43,6 +43,8 @@ namespace EggPlantApi.Context
                 };
 
                 retry.Execute(() => { Store.Maintenance.ForDatabase(database).Send(new GetStatisticsOperation()); });
+
+                //Store.Maintenance.ForDatabase(database).Send(new GetStatisticsOperation());
             }
             catch (DatabaseDoesNotExistException)
             {

@@ -1,20 +1,17 @@
 ﻿using System;
-using EggPlantApi.Context;
-using EggPlantApi.Domain.Events;
-using EggPlantApi.Domain.Services;
-using EggPlantApi.Integration;
+using EggOrdersApi.Context;
+using EggOrdersApi.Integration;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
-using static System.String;
 
-namespace EggPlantApi
+namespace EggOrdersApi
 {
     public class Startup
     {
@@ -41,7 +38,7 @@ namespace EggPlantApi
 
             var elasticUri = Configuration["ElasticSearchUri"];
 
-            if (!IsNullOrEmpty(elasticUri))
+            if (!string.IsNullOrEmpty(elasticUri))
             {
                 Log.Logger = new LoggerConfiguration()
                     .Enrich.FromLogContext()
@@ -58,16 +55,13 @@ namespace EggPlantApi
             services.AddSingleton(Configuration);
             services.Configure<RavenSettings>(options =>
             {
-                options.Url = new[] {Configuration["EggPlantApiDBUrl"]};
-                options.DefaultDatabase = Configuration["EggPlantApiDB"];
+                options.Url = new[] { Configuration["EggOrdersApiDBUrl"] };
+                options.DefaultDatabase = Configuration["EggOrdersApiDB"];
             });
             services.AddSingleton<DocumentStoreHolder>();
 
-            services.AddTransient<NewOrderCreatedIntegrationEvent>();
-            services.AddTransient<NewOrderCreatedIntegrationEventHandler>();
             services.AddSingleton<IRabbitMqPersistentConnection, RabbitMqPersistentConnection>();
             services.AddSingleton<IEventBus, EventBusRabbitMq>();
-            services.AddTransient<IEggService, EggService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,9 +78,6 @@ namespace EggPlantApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<NewOrderCreatedIntegrationEvent, NewOrderCreatedIntegrationEventHandler>();
 
             loggerFactory.AddSerilog();
 

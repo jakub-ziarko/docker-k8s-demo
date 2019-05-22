@@ -1,6 +1,24 @@
 version: '3.4'
 
 services: 
+  orders-api:
+    image: orders-api
+    build:
+      context: src/EggOrdersApi
+      dockerfile: Dockerfile
+    depends_on:
+      - ravendb
+      - elasticsearch
+
+  eggplant-api:
+    image: eggplant-api
+    build:
+      context: src/EggPlantApi
+      dockerfile: Dockerfile
+    depends_on:
+      - ravendb
+      - elasticsearch
+
   ravendb:
     image: ravendb/ravendb
 
@@ -13,3 +31,11 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
+
+  rabbit-mq-mgmt:
+    image: "rabbitmq:3-management"
+    ports:
+      - "9080:15672"
+      - "5672:5672"
+    hostname: rabbit-mq
+    container_name: rabbit-mq
