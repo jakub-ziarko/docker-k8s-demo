@@ -15,6 +15,18 @@
  eggplant-api:latest
 ```
 
+### Azure and Kubernetes
+
+Log to azure:
+`az login`
+
+Browse azure Kubernetes cluster:
+`az aks browse --resource-group docker-k8s-demo --name ClusterName`
+
+Create kune.yml based on docker-compose:
+https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/
+`kompose up`
+
 ## 2. Addresses
 * Elasticsearch: http://localhost:9200/
 * Kibana: http://localhost:5601/
