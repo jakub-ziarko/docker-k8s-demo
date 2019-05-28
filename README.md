@@ -25,7 +25,7 @@ Browse azure Kubernetes cluster:
 
 Create kune.yml based on docker-compose:
 https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/
-`kompose up`
+`kompose convert -f docker-compose.yml -f docker-compose.dev.yml`
 
 ## 2. Addresses
 * Elasticsearch: http://localhost:9200/
