@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\SourceCode\docker-k8s-demo\kompose.exe convert -f docker-compose.yml
+      -f docker-compose.dev.yml
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rabbit-mq-mgmt
+  name: rabbit-mq-mgmt-deployment
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: rabbit-mq-mgmt
+    spec:
+      containers:
+      - image: rabbitmq:3-management
+        name: rabbit-mq
+        ports:
+        - containerPort: 15672
+        - containerPort: 5672
+        resources: {}
+      hostname: rabbit-mq
+      restartPolicy: Always
+status: {}

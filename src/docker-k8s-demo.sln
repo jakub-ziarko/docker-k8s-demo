@@ -11,7 +11,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-co
 		..\docker-compose.yml = ..\docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EggOrdersApi", "EggOrdersApi\EggOrdersApi.csproj", "{E2E99757-0CDE-4A4D-BBF3-4C7991C7E3FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EggOrdersApi", "EggOrdersApi\EggOrdersApi.csproj", "{E2E99757-0CDE-4A4D-BBF3-4C7991C7E3FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{27ADB35A-79A4-4D62-B996-59C8E8317311}"
+	ProjectSection(SolutionItems) = preProject
+		..\k8s\eggplant-api-deployment.yaml = ..\k8s\eggplant-api-deployment.yaml
+		..\k8s\eggplant-api-service.yaml = ..\k8s\eggplant-api-service.yaml
+		..\k8s\elasticsearch-deployment.yaml = ..\k8s\elasticsearch-deployment.yaml
+		..\k8s\elasticsearch-service.yaml = ..\k8s\elasticsearch-service.yaml
+		..\k8s\kibana-deployment.yaml = ..\k8s\kibana-deployment.yaml
+		..\k8s\kibana-service.yaml = ..\k8s\kibana-service.yaml
+		..\k8s\orders-api-deployment.yaml = ..\k8s\orders-api-deployment.yaml
+		..\k8s\orders-api-service.yaml = ..\k8s\orders-api-service.yaml
+		..\k8s\rabbit-mq-mgmt-deployment.yaml = ..\k8s\rabbit-mq-mgmt-deployment.yaml
+		..\k8s\rabbit-mq-mgmt-service.yaml = ..\k8s\rabbit-mq-mgmt-service.yaml
+		..\k8s\ravendb-deployment.yaml = ..\k8s\ravendb-deployment.yaml
+		..\k8s\ravendb-service.yaml = ..\k8s\ravendb-service.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

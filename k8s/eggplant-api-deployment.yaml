@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\SourceCode\docker-k8s-demo\kompose.exe convert -f docker-compose.yml
+      -f docker-compose.dev.yml
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: eggplant-api
+  name: eggplant-api-deployment
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: eggplant-api
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        - name: EggPlantApiDB
+          value: EggPlant
+        - name: EggPlantApiDBUrl
+          value: http://ravendb:8080
+        - name: ElasticSearchUri
+          value: http://elasticsearch:9200
+        - name: EventBusHostName
+          value: rabbit-mq
+        - name: EventBusPass
+          value: guest
+        - name: EventBusPort
+          value: "5672"
+        - name: EventBusUserName
+          value: guest
+        - name: EventBusVirtualHost
+          value: /
+        image: jziarko/eggplant-api:v1
+        name: eggplant-api
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

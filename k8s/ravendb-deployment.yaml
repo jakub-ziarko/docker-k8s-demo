@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\SourceCode\docker-k8s-demo\kompose.exe convert -f docker-compose.yml
+      -f docker-compose.dev.yml
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ravendb
+  name: ravendb-deployment
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: ravendb
+    spec:
+      containers:
+      - env:
+        - name: RAVEN_License_Eula_Accepted
+          value: "true"
+        - name: RAVEN_Security_UnsecuredAccessAllowed
+          value: '''PrivateNetwork'''
+        - name: RAVEN_Setup_Mode
+          value: None
+        image: ravendb/ravendb:latest
+        name: ravendb
+        ports:
+        - name: "http" 
+          containerPort: 8080
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+status: {}
