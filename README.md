@@ -25,9 +25,18 @@ Browse azure Kubernetes cluster:
 
 Create kune.yml based on docker-compose:
 https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/
+
 `kompose convert -f docker-compose.yml -f docker-compose.dev.yml`
 
-`kubectl apply -f eggplant-api-deployment.yaml -f eggplant-api-service.yaml -f elasticsearch-deployment.yaml -f elasticsearch-service.yaml -f kibana-deployment.yaml -f kibana-service.yaml -f orders-api-deployment.yaml -f orders-api-service.yaml -f rabbit-mq-mgmt-deployment.yaml -f rabbit-mq-mgmt-service.yaml -f ravendb-deployment.yaml -f ravendb-service.yaml`
+```kubectl apply -f eggplant-api-deployment.yaml -f eggplant-api-service.yaml -f elasticsearch-deployment.yaml -f elasticsearch-service.yaml -f kibana-deployment.yaml -f kibana-service.yaml -f orders-api-deployment.yaml -f orders-api-service.yaml -f rabbit-mq-mgmt-deployment.yaml -f rabbit-mq-mgmt-service.yaml -f ravendb-deployment.yaml -f ravendb-service.yaml```
+
+### Minikube
+
+`minikube start --vm-driver=host`
+
+`minikube dashboard`
+
+`minikube stop`
 
 ## 2. Addresses
 * Elasticsearch: http://localhost:9200/
