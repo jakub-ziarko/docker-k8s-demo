@@ -32,7 +32,7 @@ https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kuber
 
 ### Minikube
 
-`minikube start --vm-driver=host`
+`minikube start --vm-driver=hyperv --cpus 4 --memory 8192`
 
 `minikube dashboard`
 
