@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: ravendb
-  name: ravendb-service
+  name: ravendb
 spec:
   type: NodePort
   ports:

@@ -7,8 +7,8 @@ metadata:
     kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
-    io.kompose.service: rabbit-mq-mgmt
-  name: rabbit-mq-mgmt-service
+    io.kompose.service: rabbitmq
+  name: rabbitmq
 spec:
   type: NodePort
   ports:
@@ -19,6 +19,6 @@ spec:
     port: 5672
     targetPort: 5672
   selector:
-    io.kompose.service: rabbit-mq-mgmt
+    io.kompose.service: rabbitmq
 status:
   loadBalancer: {}

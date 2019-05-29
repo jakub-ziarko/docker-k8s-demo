@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: kibana
-  name: kibana-service
+  name: kibana
 spec:
   type: NodePort
   ports:

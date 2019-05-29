@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: orders-api
-  name: orders-api-service
+  name: orders-api
 spec:
   type: NodePort
   ports:

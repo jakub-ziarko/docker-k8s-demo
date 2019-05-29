@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: eggplant-api
-  name: eggplant-api-service
+  name: eggplant-api
 spec:
   type: NodePort
   ports:

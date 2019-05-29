@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: eggplant-api
-  name: eggplant-api-deployment
+  name: eggplant-api
 spec:
   replicas: 1
   strategy: {}
@@ -27,7 +27,7 @@ spec:
         - name: EggPlantApiDB
           value: EggPlant
         - name: EggPlantApiDBUrl
-          value: http://ravendb:8080
+          value: http://ravendb:8000
         - name: ElasticSearchUri
           value: http://elasticsearch:9200
         - name: EventBusHostName

@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: orders-api
-  name: orders-api-deployment
+  name: orders-api
 spec:
   replicas: 1
   strategy: {}
@@ -27,9 +27,9 @@ spec:
         - name: EggOrdersApiDB
           value: EggOrders
         - name: EggOrdersApiDBUrl
-          value: http://ravendb:8000
+          value: http://ravendb:8000/
         - name: ElasticSearchUri
-          value: http://elasticsearch:9200
+          value: http://elasticsearch:9200/
         - name: EventBusHostName
           value: rabbit-mq-mgmt
         - name: EventBusPass

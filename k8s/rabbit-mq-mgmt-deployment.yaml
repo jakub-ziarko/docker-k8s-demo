@@ -7,8 +7,8 @@ metadata:
     kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
-    io.kompose.service: rabbit-mq-mgmt
-  name: rabbit-mq-mgmt-deployment
+    io.kompose.service: rabbitmq
+  name: rabbitmq
 spec:
   replicas: 1
   strategy: {}
@@ -16,7 +16,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: rabbit-mq-mgmt
+        io.kompose.service: rabbitmq
     spec:
       containers:
       - image: rabbitmq:3-management

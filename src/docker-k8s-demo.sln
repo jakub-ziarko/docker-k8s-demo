@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{27ADB35A-79A
 		..\k8s\eggplant-api-service.yaml = ..\k8s\eggplant-api-service.yaml
 		..\k8s\elasticsearch-deployment.yaml = ..\k8s\elasticsearch-deployment.yaml
 		..\k8s\elasticsearch-service.yaml = ..\k8s\elasticsearch-service.yaml
+		..\k8s\ingress.yaml = ..\k8s\ingress.yaml
 		..\k8s\kibana-deployment.yaml = ..\k8s\kibana-deployment.yaml
 		..\k8s\kibana-service.yaml = ..\k8s\kibana-service.yaml
 		..\k8s\orders-api-deployment.yaml = ..\k8s\orders-api-deployment.yaml

@@ -8,7 +8,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: ravendb
-  name: ravendb-deployment
+  name: ravendb
 spec:
   replicas: 1
   strategy: {}
